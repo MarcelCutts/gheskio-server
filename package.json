@@ -1,0 +1,11 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "Marcel Cutts <marcel.cutts@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^5.1.0"
+  }
+}
