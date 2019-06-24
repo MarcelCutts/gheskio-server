@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
+    "msnodesqlv8": "^0.7.3",
     "mssql": "^5.1.0"
   }
 }

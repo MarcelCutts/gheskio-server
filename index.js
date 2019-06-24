@@ -1,20 +1,21 @@
 const express = require("express");
-const mssql = require("mssql");
+const mssql = require('mssql/msnodesqlv8');
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+const cs = `Driver={SQL Server Native Client 10.0};Server=.;Database=gheskio;Trusted_Connection=yes;`
 
 const config = {
-  user: "sa",
-  password: "<YourStrong!Passw0rd>",
-  server: "localhost",
-  database: "gheskio"
+  connectionString: cs,
+  useTrustedConnection: true
 };
+
 
 const pool = new mssql.ConnectionPool(config);
 const poolConnect = pool.connect();
+
 
 app.post("/patients", async (req, res) => {
   const { patients } = req.body;
@@ -28,7 +29,7 @@ app.post("/patients", async (req, res) => {
           .request()
           .input("patient_code", mssql.NVarChar(50), patient.id)
           .input("comments", mssql.NVarChar(50), patient.comments)
-          .input("time_started", mssql.DateTime, patient.timeStated)
+          .input("time_started", mssql.DateTime, patient.timeStarted)
           .input("time_finished", mssql.DateTime, patient.timeFinished)
           .input("staff_name", mssql.NVarChar(128), patient.staffName)
           .input("station_id", mssql.NVarChar(64), patient.stationId)
@@ -44,6 +45,7 @@ app.post("/patients", async (req, res) => {
     mssql.close();
     res.sendStatus(201);
   } catch (err) {
+	console.log(err);
     res.sendStatus(500);
   }
 });
